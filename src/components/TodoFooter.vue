@@ -1,13 +1,17 @@
 <template>
-  <h1>Footer component</h1>
+  <div>
+    <button @click="clearAll">Clear All</button>
+  </div>
 </template>
 
 <script>
 export default {
-
-}
+  methods: {
+    clearAll() {
+      this.$emit("clearAll");
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style scoped></style>
