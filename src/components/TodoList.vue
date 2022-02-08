@@ -1,15 +1,15 @@
 <template>
   <div>
-    <ul>
+    <transition-group name="list" tag="ul" class="instruments">
       <li
-        v-for="(item, index) in todoItems"
+        v-for="(item, index) in this.$store.state.todoList"
         :key="item.item"
         @click="toggleClass(item, index)"
       >
         <span :class="{ completed: item.completed }">{{ item.item }}</span>
-        <button @click="removeTodo(item)">remove</button>
+        <button @click="removeTodo(item, index)">remove</button>
       </li>
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -21,11 +21,11 @@ export default {
     },
   },
   methods: {
-    removeTodo(item) {
-      this.$emit("removeTodo", item);
+    removeTodo(item, index) {
+      this.$store.commit("removeTodo", { item, index });
     },
     toggleClass(todoItem, index) {
-      this.$emit("toggleClass", todoItem, index);
+      this.$store.commit("toggleClass", { todoItem, index });
     },
   },
 };
@@ -34,5 +34,18 @@ export default {
 <style>
 .completed {
   text-decoration: line-through;
+}
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+  transition: all 1s;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
 }
 </style>
