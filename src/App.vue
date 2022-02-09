@@ -3,7 +3,7 @@
     <TodoHeader />
     <TodoInput />
     <TodoList />
-    <TodoFooter v-if="this.$store.state.todoList.length > 0" />
+    <TodoFooter />
   </div>
 </template>
 

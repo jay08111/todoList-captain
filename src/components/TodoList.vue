@@ -2,31 +2,25 @@
   <div>
     <transition-group name="list" tag="ul" class="instruments">
       <li
-        v-for="(item, index) in this.$store.state.todoList"
-        :key="item.item"
-        @click="toggleClass(item, index)"
+        v-for="({ item, completed }, index) in storedTodoItems"
+        :key="item"
+        @click="toggleClass({ item, index })"
       >
-        <span :class="{ completed: item.completed }">{{ item.item }}</span>
-        <button @click="removeTodo(item, index)">remove</button>
+        <span :class="{ completed: completed }">{{ item }}</span>
+        <button @click="removeTodo({ item, index })">remove</button>
       </li>
     </transition-group>
   </div>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 export default {
-  props: {
-    todoItems: {
-      type: Array,
-    },
-  },
   methods: {
-    removeTodo(item, index) {
-      this.$store.commit("removeTodo", { item, index });
-    },
-    toggleClass(todoItem, index) {
-      this.$store.commit("toggleClass", { todoItem, index });
-    },
+    ...mapMutations(["removeTodo", "toggleClass"]),
+  },
+  computed: {
+    ...mapGetters(["storedTodoItems"]),
   },
 };
 </script>
